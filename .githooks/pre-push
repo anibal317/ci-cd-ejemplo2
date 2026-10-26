@@ -1,0 +1,29 @@
+#!/usr/bin/env sh
+# Hook pre-push: ejecuta los tests antes de dejar subir commits al remoto.
+#
+# Instalación (una vez por clon):
+#   git config core.hooksPath .githooks
+#
+# Este hook es una red de seguridad local: se puede saltar con `git push --no-verify`.
+# La barrera real es la protección de rama + el required check "CI OK" en GitHub.
+
+set -e
+
+echo "🔍 [pre-push] Ejecutando tests antes de permitir el push..."
+
+if [ ! -d "backend/node_modules" ] || [ ! -d "frontend/node_modules" ]; then
+  echo "⚠️  Faltan dependencias. Ejecuta 'npm install' en backend/ y frontend/."
+  echo "   (Se bloquea el push para no subir código sin verificar)."
+  exit 1
+fi
+
+echo "▶ Backend (NestJS) · unitarios"
+(cd backend && npm test -- --ci --silent)
+
+echo "▶ Backend (NestJS) · e2e"
+(cd backend && npm run test:e2e -- --silent)
+
+echo "▶ Frontend (Next.js)"
+(cd frontend && npm test -- --ci --silent)
+
+echo "✅ [pre-push] Tests OK. Push permitido."

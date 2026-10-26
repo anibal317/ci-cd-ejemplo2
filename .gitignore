@@ -1,0 +1,33 @@
+# Dependencias
+node_modules/
+.pnp
+.pnp.js
+
+# Build / artefactos
+dist/
+.next/
+.swc/
+out/
+build/
+coverage/
+*.tsbuildinfo
+
+# Generado por `next dev` (reglas para agentes de IA)
+frontend/AGENTS.md
+
+# Entorno
+.env
+.env.*
+!.env.example
+
+# Logs y sistema
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.DS_Store
+Thumbs.db
+
+# Editores
+.idea/
+.vscode/*
+!.vscode/extensions.json

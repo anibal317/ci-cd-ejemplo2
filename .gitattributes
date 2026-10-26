@@ -1,0 +1,6 @@
+# Normaliza finales de línea en el repo (importante para scripts en Windows)
+* text=auto eol=lf
+
+*.sh text eol=lf
+*.yml text eol=lf
+*.yaml text eol=lf
