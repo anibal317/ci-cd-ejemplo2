@@ -31,6 +31,12 @@ Ejemplo mínimo pero completo de un pipeline que **impide hacer push a `main` y 
 ├── frontend/                        # Next.js (App Router) + Jest
 │   ├── components/Counter.tsx
 │   ├── components/Counter.test.tsx           # Test de componente
+│   ├── components/TaskForm.tsx               # Formulario (ejercicio con TODOs)
+│   ├── components/TaskForm.test.tsx          # 2 tests en rojo a propósito
+│   ├── components/Modal.tsx                  # Modal accesible reutilizable
+│   ├── components/Modal.test.tsx             # Apertura/cierre y accesibilidad
+│   ├── components/TaskModal.tsx              # Demo visual: botón + modal + lista
+│   ├── components/TaskModal.test.tsx         # Integración Modal + TaskForm
 │   ├── lib/format.test.ts                    # Test de utilidad
 │   └── app/page.test.tsx                     # Test de página
 └── scripts/
@@ -134,6 +140,9 @@ git config core.hooksPath .githooks
 | Qué se prueba | Dónde está | Tipo |
 | --- | --- | --- |
 | Componente `<Counter />`: render, clics, valores negativos y reinicio | `components/Counter.test.tsx` | Componente |
+| Componente `<TaskForm />`: validación de vacío y recorte de espacios (2 tests en rojo hasta resolver los TODOs) | `components/TaskForm.test.tsx` | Componente |
+| Componente `<Modal />`: apertura/cierre, Escape, clic en el fondo y título accesible | `components/Modal.test.tsx` | Componente |
+| `<TaskModal />`: abrir el modal, crear una tarea y verla en la lista | `components/TaskModal.test.tsx` | Componente (integración) |
 | Utilidad `formatPrice`: formato, decimales, negativos y errores | `lib/format.test.ts` | Unitario |
 | Página de inicio: textos, precio y que monta el contador | `app/page.test.tsx` | Componente |
 

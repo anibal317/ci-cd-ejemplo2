@@ -1,3 +1,4 @@
+import { NotFoundException } from '@nestjs/common';
 import { Test } from '@nestjs/testing';
 import { TasksService } from './tasks.service';
 
@@ -42,5 +43,28 @@ describe('TasksService', () => {
     }).compile();
 
     expect(moduleRef.get(TasksService)).toBeInstanceOf(TasksService);
+  });
+
+  describe('findOne', () => {
+    it('devuelve la tarea cuyo id coincide', () => {
+      // Arrange: dos tareas para que no valga con devolver la primera.
+      service.create('Primera tarea');
+      const segunda = service.create('Segunda tarea');
+
+      // Act
+      const result = service.findOne(segunda.id);
+
+      // Assert
+      expect(result.id).toBe(segunda.id);
+      expect(result.title).toBe('Segunda tarea');
+    });
+
+    it('lanza NotFoundException si el id no existe', () => {
+      // Arrange
+      service.create('Primera tarea');
+
+      // Act + Assert
+      expect(() => service.findOne('id-inexistente')).toThrow(NotFoundException);
+    });
   });
 });

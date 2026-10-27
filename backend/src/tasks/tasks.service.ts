@@ -32,6 +32,16 @@ export class TasksService {
     return task;
   }
 
+  findOne(id: string): Task {
+    const task = this.tasks.find((item) => item.id === id);
+
+    if (!task) {
+      throw new NotFoundException(`No existe la tarea ${id}`);
+    }
+
+    return task;
+  }
+
   toggle(id: string): Task {
     const task = this.tasks.find((item) => item.id === id);
 

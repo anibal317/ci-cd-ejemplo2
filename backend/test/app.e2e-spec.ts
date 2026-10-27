@@ -48,9 +48,33 @@ describe('Tasks (e2e)', () => {
     return request(app.getHttpServer()).patch('/tasks/no-existe/toggle').expect(404);
   });
 
+  it('GET /tasks/:id devuelve la tarea solicitada', async () => {
+    // Creamos dos para comprobar que devuelve la correcta, no la primera.
+    const primera = await request(app.getHttpServer())
+      .post('/tasks')
+      .send({ title: 'Primera' })
+      .expect(201);
+
+    const segunda = await request(app.getHttpServer())
+      .post('/tasks')
+      .send({ title: 'Segunda' })
+      .expect(201);
+
+    const response = await request(app.getHttpServer())
+      .get(`/tasks/${segunda.body.id}`)
+      .expect(200);
+
+    expect(response.body.id).toBe(segunda.body.id);
+    expect(response.body.id).not.toBe(primera.body.id);
+    expect(response.body.title).toBe('Segunda');
+  });
+
+  it('GET /tasks/:id con id inexistente responde 404', () => {
+    return request(app.getHttpServer()).get('/tasks/no-existe').expect(404);
+  });
+
   it('publica la documentación OpenAPI de Swagger', async () => {
     const response = await request(app.getHttpServer()).get('/docs-json').expect(200);
-
     expect(response.body.info.title).toBe('Tasks API');
     expect(response.body.paths).toHaveProperty('/tasks');
     expect(response.body.paths).toHaveProperty('/tasks/{id}/toggle');

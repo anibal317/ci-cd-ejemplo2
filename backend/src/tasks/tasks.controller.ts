@@ -24,6 +24,19 @@ export class TasksController {
     return this.tasksService.findAll();
   }
 
+  @Get(':id')
+  @ApiOperation({ summary: 'Obtiene una tarea por su id' })
+  @ApiParam({
+    name: 'id',
+    description: 'ID de la tarea',
+    example: '3f1c2b9e-8a7d-4c6f-9e2a-1b0c3d4e5f60',
+  })
+  @ApiOkResponse({ description: 'Tarea encontrada', type: TaskDto })
+  @ApiNotFoundResponse({ description: 'La tarea no existe' })
+  findOne(@Param('id') id: string) {
+    return this.tasksService.findOne(id);
+  }
+
   @Post()
   @ApiOperation({ summary: 'Crea una tarea' })
   @ApiCreatedResponse({ description: 'Tarea creada', type: TaskDto })
