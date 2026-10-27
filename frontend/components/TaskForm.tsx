@@ -20,10 +20,14 @@ export function TaskForm({ onAdd }: TaskFormProps) {
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
-    // BUG 1: no valida que el título tenga contenido.
-    // BUG 2: pasa el título sin recortar los espacios.
-    onAdd(title);
+    const cleanTitle = title.trim();
 
+    if (!cleanTitle) {
+      setError('El título es obligatorio');
+      return;
+    }
+
+    onAdd(cleanTitle);
     setTitle('');
     setError('');
   }

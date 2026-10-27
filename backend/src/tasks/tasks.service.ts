@@ -33,10 +33,13 @@ export class TasksService {
   }
 
   findOne(id: string): Task {
-    // TODO(ejercicio): esta implementación es incorrecta a propósito.
-    // Debe devolver la tarea cuyo id coincida y lanzar NotFoundException si no existe.
-    // Ahora mismo devuelve siempre la primera tarea.
-    return this.tasks[0];
+    const task = this.tasks.find((item) => item.id === id);
+
+    if (!task) {
+      throw new NotFoundException(`No existe la tarea ${id}`);
+    }
+
+    return task;
   }
 
   toggle(id: string): Task {
