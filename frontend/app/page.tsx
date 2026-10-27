@@ -1,4 +1,5 @@
 import { Counter } from '@/components/Counter';
+import { TaskModal } from '@/components/TaskModal';
 import { formatPrice } from '@/lib/format';
 
 export default function Home() {
@@ -11,7 +12,11 @@ export default function Home() {
       </p>
       <p>Backend: NestJS + Jest · Frontend: Next.js + Jest · CI: GitHub Actions</p>
       <p>Precio de ejemplo: {formatPrice(199900)}</p>
-      <Counter initialValue={0} />
+
+      <div className="demo-grid">
+        <Counter initialValue={0} />
+        <TaskModal />
+      </div>
     </main>
   );
 }
